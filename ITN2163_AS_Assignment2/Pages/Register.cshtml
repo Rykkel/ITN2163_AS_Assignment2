@@ -1,0 +1,140 @@
+﻿@page
+@model ITN2163_AS_Assignment2.Pages.RegisterModel
+@{
+}
+
+<div class="container mt-5">
+
+	<div class="row justify-content-center align-items-center">
+
+		<div class="col-sm-12 col-md-12 col-lg-4">
+			<h1 class="mb-3">Register </h1>
+
+			<form method="post" enctype="multipart/form-data">
+				<div asp-validation-summary="All" class="text-danger"></div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.FirstName">First Name:</label>
+					<input type="Text" asp-for="RModel.FirstName" class="form-control" />
+					<span asp-validaton-for="RModel.FirstName" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.LastName">Last Name:</label>
+					<input type="Text" asp-for="RModel.LastName" class="form-control" />
+					<span asp-validaton-for="RModel.LastName" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.Gender">Gender:</label>
+					<div>
+						<input type="radio" asp-for="RModel.Gender" value="Male" id="male" class="form-check-input" />
+						<label for="male" class="form-check-label">Male</label>
+					</div>
+					<div>
+						<input type="radio" asp-for="RModel.Gender" value="Female" id="female" class="form-check-input" />
+						<label for="female" class="form-check-label">Female</label>
+					</div>
+					<div>
+						<input type="radio" asp-for="RModel.Gender" value="Other" id="other" class="form-check-input" />
+						<label for="other" class="form-check-label">Other</label>
+					</div>
+					<span asp-validation-for="RModel.Gender" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.DateOfBirth">Date of Birth:</label>
+					<input type="date" asp-for="RModel.DateOfBirth" class="form-control" />
+					<span asp-validation-for="RModel.DateOfBirth" class="text-danger"></span>
+				</div>
+
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.Email">Email Address</label>
+					<input type="Text" asp-for="RModel.Email" class="form-control" />
+					<span asp-validaton-for="RModel.Email" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.NRIC">NRIC:</label>
+					<input type="Text" asp-for="RModel.NRIC" class="form-control" />
+					<span asp-validaton-for="RModel.NRIC" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.Password" >Password</label>
+					<input type="text" asp-for="RModel.Password" class="form-control" id="password" onkeyup="validatePassword()" />
+					<span asp-validaton-for="RModel.Password" class="text-danger"></span>
+					<span id="lbl_pwdchecker"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.ConfirmPassword">Confirm Password</label>
+					<input type="text" asp-for="RModel.ConfirmPassword" class="form-control" />
+					<span asp-validaton-for="RModel.ConfirmPassword" class="text-danger"></span>
+				</div>
+
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.Resume">Resume:</label>
+					<input type="file" asp-for="RModel.Resume" class="form-control" />
+					<span asp-validaton-for="RModel.Resume" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="RModel.WhoAmI">Who am I:</label>
+					<textarea asp-for="RModel.WhoAmI" class="form-control"><</textarea>
+					<span asp-validaton-for="RModel.WhoAmI" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<button type="submit" class="btn btn-primary">Register</button>
+				</div>
+			</form>
+
+			<script type="text/javascript">
+				function validatePassword() {
+					var pwd = document.getElementById("password").value;
+					var message = document.getElementById("lbl_pwdchecker");
+
+					// Check for minimum length
+					if (pwd.length < 12) {
+						message.innerHTML = "Password must be at least 12 characters.";
+						message.style.color = "red";
+						return;
+					}
+
+					// Regular expressions to check for lowercase, uppercase, digit and special character
+					var lowercase = /[a-z]/;
+					var uppercase = /[A-Z]/;
+					var number = /[0-9]/;
+					var specialCharacter = /[\W_]/; // Matches any non-word character
+
+					if (!lowercase.test(pwd)) {
+						message.innerHTML = "Password must include at least one lowercase letter.";
+						message.style.color = "red";
+						return;
+					}
+					if (!uppercase.test(pwd)) {
+						message.innerHTML = "Password must include at least one uppercase letter.";
+						message.style.color = "red";
+						return;
+					}
+					if (!number.test(pwd)) {
+                        message.innerHTML = "Password must include at least one number.";
+                        message.style.color = "red";
+                        return;
+                    }
+					if (!specialCharacter.test(pwd)) {
+                        message.innerHTML = "Password must include at least one special character.";
+                        message.style.color = "red";
+                        return;
+                    }
+
+					message.innerHTML = "Strong password!";
+                    message.style.color = "green";
+				}
+			</script>
+		</div>
+	</div>
+</div>

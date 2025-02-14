@@ -1,0 +1,77 @@
+﻿@page "/Error/{statusCode?}"
+@model ErrorModel
+@{
+    ViewData["Title"] = "Error";
+    int? code = Model.StatusCode;
+}
+
+
+@if (Model.ShowRequestId)
+{
+    @switch (code)
+    {
+        case 404:
+            <div class="container" style="text-align: center;  color: #888;">
+                <h1 style="font-size: 150px; color: #888; margin-bottom: 0px;">404</h1>
+                <p style="font-size: 50px; ">We couldn't find this page.</p>
+                <p>The page you are looking for might have been removed or is temporarily unavailable.</p>
+                    <p>Please navigate back to <a href="https://localhost:7084/">Home Page</a></p>
+            </div>
+            break;
+        case 403:
+            <div class="container" style="text-align: center;  color: #888;"> 
+                <h1 style="font-size: 150px; color: #888; margin-bottom: 0px;">403</h1>
+                <p style="font-size: 50px; ">You do not have permission to view this page.</p>
+                <p>The page you are looking either doesn't exists or some issue has occurred.</p>
+                <p>Please navigate back to <a href="https://localhost:7084/">Home Page</a></p>
+            </div>
+            break;
+        case 400:
+            <div class="container text-center" style="color: #888;">
+                <h1 style="font-size: 150px;">400</h1>
+                <p style="font-size: 50px;">Bad Request.</p>
+                <p>The request you sent contains errors.</p>
+                <p>Please verify your input and try again.</p>
+            </div>
+            break;
+        case 401:
+            <div class="container text-center" style="color: #888;">
+                <h1 style="font-size: 150px;">401</h1>
+                <p style="font-size: 50px;">Not Authorized.</p>
+                <p>You need to log in or provide valid credentials.</p>
+            </div>
+            break;
+        case 405:
+            <div class="container text-center" style="color: #888;">
+                <h1 style="font-size: 150px;">405</h1>
+                <p style="font-size: 50px;">Method Not Allowed.</p>
+                <p>The HTTP method used is not allowed for this endpoint.</p>
+            </div>
+            break;
+        case 500:
+            <div class="container text-center" style="color: #888;">
+                <h1 style="font-size: 150px;">500</h1>
+                <p style="font-size: 50px;">Internal Server Error.</p>
+                <p>Something went wrong on our end. Please try again later.</p>
+            </div>
+            break;
+        case 503:
+            <div class="container text-center" style="color: #888;">
+                <h1 style="font-size: 150px;">503</h1>
+                <p style="font-size: 50px;">Service Unavailable.</p>
+                <p>The service is temporarily unavailable due to maintenance or overloading. Please try again later.</p>
+            </div>
+            break;
+        default:
+            <div class="container text-center" style="color: #888;">
+                <h1 style="font-size: 150px;">Oh no!</h1>
+                <p style="font-size: 50px;">An error occurred!.</p>
+                <p>Please try again later.</p>
+            </div>
+            break;
+    }
+}
+else
+{
+    <h2>An error occurred while processing your request.</h2>
+}

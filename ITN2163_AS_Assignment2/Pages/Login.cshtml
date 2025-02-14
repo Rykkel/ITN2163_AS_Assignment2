@@ -1,0 +1,65 @@
+﻿@page
+@model ITN2163_AS_Assignment2.Pages.LoginModel
+@{
+}
+
+<div class="container mt-5">
+
+	<div class="row justify-content-center align-items-center">
+
+		<div class="col-sm-12 col-md-12 col-lg-4">
+			<h1 class="mb-3">Login</h1>
+			<form method="post" id="loginForm">
+				<div asp-validation-summary="All" class="text-danger"></div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="LModel.Email">Email Address</label>
+					<input type="Text" asp-for="LModel.Email" class="form-control" />
+					<span asp-validaton-for="LModel.Email" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label class="form-label" asp-for="LModel.Password">Password</label>
+					<input type="Text" asp-for="LModel.Password" class="form-control" />
+					<span asp-validaton-for="LModel.Password" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<a asp-page="/ForgotPassword" class="btn btn-link">Forgot Password?</a>
+				</div>
+
+				<div class="mb-3 form-check">
+					<input type="checkbox" asp-for="LModel.RememberMe" class="form-check-input" />
+					<label class="form-check-label" asp-for="LModel.RememberMe">Remember Me?</label>
+				</div>
+
+				<!-- Hidden field to store the reCAPTCHA token -->
+				<input type="hidden" id="RecaptchaToken" name="RecaptchaToken" />
+
+				<div class="mb-3">
+					<button type="submit" class="btn btn-primary">Login</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Load the reCAPTCHA v3 API -->
+<script src="https://www.google.com/recaptcha/api.js?render=6Lds5dIqAAAAAJlOhdZ5mwMIoFYWWIymwbsJa4QJ"></script>
+<script>
+	// Attach an event listener to the form submission
+	document.getElementById('loginForm').addEventListener('submit', function (event) {
+		event.preventDefault(); // Prevent immediate submission
+
+		grecaptcha.ready(function () {
+			// Execute reCAPTCHA with an action name (e.g., "login")
+			grecaptcha.execute('6Lds5dIqAAAAAJlOhdZ5mwMIoFYWWIymwbsJa4QJ', { action: 'login' }).then(function (token) {
+				// Set the token in the hidden field
+				document.getElementById('RecaptchaToken').value = token;
+				// Now submit the form
+				document.getElementById('loginForm').submit();
+			});
+		});
+	});
+</script>
+

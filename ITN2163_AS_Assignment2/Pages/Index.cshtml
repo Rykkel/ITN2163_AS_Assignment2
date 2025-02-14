@@ -1,0 +1,60 @@
+﻿@page
+@model IndexModel
+@inject IHttpContextAccessor HttpContextAccessor;
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome, @Model.CurrentUser.FirstName @Model.CurrentUser.LastName!</h1>
+    <p>Your personal information is displayed below:</p>
+</div>
+
+<div class="container">
+    <div class="row">
+        <!-- User Info Card -->
+        <div class="col-md-6 offset-md-3">
+            @if (Model.CurrentUser != null)
+            {
+                <div class="card">
+                    <div class="card-header">
+                    <h3 class="card-title">Profile Information</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item"><strong>Full Name:</strong> @Model.CurrentUser.FirstName @Model.CurrentUser.LastName</li>
+                        <li class="list-group-item"><strong>Gender:</strong> @Model.CurrentUser.Gender</li>
+                        <li class="list-group-item"><strong>NRIC:</strong> @Model.DecryptedNRIC</li>
+                        <li class="list-group-item"><strong>Date of Birth:</strong> @Model.CurrentUser.DateOfBirth</li>
+                        <li class="list-group-item"><strong>Who Am I:</strong> @Model.CurrentUser.WhoAmI</li>
+
+                            @if (!string.IsNullOrEmpty(Model.CurrentUser.Resume))
+                            {
+                                <li class="list-group-item">
+                                    <strong>Resume:</strong>
+                                    <a href="@Model.CurrentUser.Resume" target="_blank">Download Resume</a>
+                                </li>
+                            }
+                    </ul>
+                </div>
+                    <div class="card-body mt-3">
+                        <a href="/ChangePassword" class="btn btn-outline-danger">
+                            Change Password
+                        </a>
+                    </div>
+
+                <div class="card-body">
+                    <ul>
+                        <li>Customer username: @HttpContextAccessor.HttpContext.Session.GetString("UserName")</li>
+                        <li>Customer Email: @HttpContextAccessor.HttpContext.Session.GetString("UserEmail")</li>
+                    </ul>
+                </div>
+            </div>
+            }
+            else
+            {
+                <p>Your session has expired. Please <a href="/Login">log in</a> again.</p>
+            }
+        </div>
+    </div>
+</div>
